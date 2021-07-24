@@ -120,6 +120,95 @@
 			"response": []
 		},
 		{
+			"name": "meal update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Tofou",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "2000",
+							"type": "text"
+						},
+						{
+							"key": "qty",
+							"value": "1",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/meals/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"meals",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "meal create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Tofou 1",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "2300",
+							"type": "text"
+						},
+						{
+							"key": "qty",
+							"value": "1",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/meals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"meals"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "meal details",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
