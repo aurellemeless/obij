@@ -146,7 +146,11 @@ app.post('/register', (req, res) => {
 
 app.post('/checkout', (req, res) => {  
   const body = req.body;
-  if(body.cart === undefined || body.cart =='' ){
+  if(body.cart === undefined || body.cart ==''
+    || body.user === undefined || body.user =='' 
+    || body.user.name === undefined || body.user.name ==''
+    || body.user.email === undefined || body.user.email ==''
+    || body.user.phone === undefined || body.user.phone ==''  ){
         return res.sendStatus(422);
     }
   //
@@ -188,9 +192,12 @@ app.post('/checkout', (req, res) => {
       // 
       let newInvoice = {
         reference :  crypto.randomBytes(6).toString('hex'),
-        amount: amount
+        amount: amount,
+        name: body.user.name,
+        email: body.user.email,
+        phone: body.user.phone
       };
-      const invoiceSQL =  `INSERT INTO invoice(reference,amount, created_at) VALUES('${newInvoice.reference}', '${newInvoice.amount}', NOW())`;
+      const invoiceSQL =  `INSERT INTO invoice(name,email, phone,reference,amount, created_at) VALUES('${newInvoice.name}', '${newInvoice.email}', '${newInvoice.phone}', '${newInvoice.reference}', '${newInvoice.amount}', NOW())`;
     
       database.query(invoiceSQL, function(err, results){
         if(err){
