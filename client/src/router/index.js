@@ -7,12 +7,12 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Accueil',
+    name: 'Home',
     component: Home
   },
   {
     path: '/login',
-    name: 'Home',
+    name: 'Login',
     component: () => import(/* webpackChunkName: "about" */ '../components/Login.vue')
   },
   {
@@ -23,6 +23,11 @@ const routes = [
   {
     path: '/cart',
     name: 'Cart',
+    component: () => import(/* webpackChunkName: "about" */ '../components/Cart.vue')
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
     component: () => import(/* webpackChunkName: "about" */ '../components/Cart.vue')
   }
 ]

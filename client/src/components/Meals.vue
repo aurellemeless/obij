@@ -21,27 +21,34 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
   name: 'Meals',
   data (){
       return {
-        meals : [
-            {name : "foutou", price: 1200, qty:1, url:"https://unsplash.com/photos/-YHSwy6uqvk"},
-            {name : "foufou", price: 1500, qty:1,  url:"https://unsplash.com/photos/-YHSwy6uqvk"},
-            {name : "placali", price: 1600, qty:1,  url:"https://unsplash.com/photos/-YHSwy6uqvk"},
-            {name : "Attiéké", price: 1700, qty:1,  url:"https://unsplash.com/photos/-YHSwy6uqvk"}
-        ]
+        meals : []
       }
   },
   methods : {
       add : function(meal){
-        let Cart = JSON.parse(localStorage.getItem('CART')) ;
+        if(confirm(`Voulez vous ${meal.name} ajouter au panier`)){
+          let Cart = JSON.parse(localStorage.getItem('CART')) ;
+          meal.qty = 1;
           Cart.push(meal);
           localStorage.setItem('CART',JSON.stringify(Cart))
           this.$root.$emit('cart-updated-event', meal);
-          alert('plat ajouté au panier');
+        }
+        
+      },
+      loadMeals : function(){
+        axios
+        .get('http://localhost:3001/meals')
+        .then(response => (this.meals = response.data))
+        .catch(error => console.log(error))
       }
+  },
+  mounted(){
+    this.loadMeals();
   }
 }
 </script>
