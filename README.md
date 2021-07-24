@@ -1,28 +1,33 @@
-# Obij - restaurant
+# Obij - Restaurant
 
-Solution e commerce pour restaurant
+![Alt text](doc/home.png?raw=true "Accueil")
+![Alt text](doc/cart.png?raw=true "Panier")
+![Alt text](doc/login.png?raw=true "Connexion")
+![Alt text](doc/register.png?raw=true "Inscription")
+Solution e-commerce pour restaurant
 roles
  - abonnés, visiteurs, manager/admin
 
 Features
- - Inscription, authentification, panier, paiement
+ - Inscription, authentification, panier, commande
 
 ### Avant propos
 Ce projet est un challenge personnel pour maitriser vuejs et non une application complete.
-il faut souligner que :
+Il faut souligner que :
 
- - le code n'est pas testé
- - le code ne respecte pas formément les bonnes pratiques de developpement
+ - Le code n'est pas testé
+ - Le code ne respecte pas formément les bonnes pratiques de developpement
 
 ## Prérequis
  - MySQL 8 +
  - NodeJs
 ## Config Base de données
  - Créez une base de données nommée `obij`
- - Importez dans MySQL le fichier SQL : 
+ - Remplacez les informations correctes de la base de données dans le fichier `./api/config/database.js`
+ - Importez dans MySQL le fichier SQL `./database.sql`  
 ## Dossier client => le front end 
 
-se positionner dans le dossier ./client et executer  :
+Se positionner dans le dossier `./client` et executer  :
 
 ### Config 
 ```
@@ -33,16 +38,22 @@ npm install
 ```
 npm run serve
 ```
-lancez dans votre navigateur : http://localhost:8081/
+Lancez dans votre navigateur : http://localhost:8081/
 
 ## Dossier api => le backend API
 
-se positionner dans le dossier api et executer  :
+Se positionner dans le dossier api et executer  :
 
 ### Config 
 ```
 npm install
 ```
-### demarrer l'application
+### Demarrer l'API
 ```
 npm start
+```
+
+## Quelques améliorations possibles
+- Eviter les doublons dans le panier
+- L'interface utilisateur
+- Utiliser un ORM
