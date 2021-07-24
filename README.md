@@ -53,6 +53,8 @@ npm install
 npm start
 ```
 
+### Tester l'API 
+Vous pouvez tester l'API en utilisant postman, il suffit d'importer le ficher  `./doc/OBIJ.postman_collection.json`.
 ## Quelques améliorations possibles
 - Eviter les doublons dans le panier
 - L'interface utilisateur
