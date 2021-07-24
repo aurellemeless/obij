@@ -5,9 +5,7 @@
         <div class="col">
           <div class="empty" v-if="total == 0">
             <h2>Votre panier est vide</h2>
-            <router-link class="btn btn-primary btn-lg" to="/"
-              >Retourner à l'acceuil
-            </router-link>
+            <router-link class="btn btn-primary btn-lg" to="/">Retourner à l'acceuil</router-link>
           </div>
           <div v-if="total > 0">
             <table class="table">
@@ -29,8 +27,8 @@
                   <td>{{ item.qty }}</td>
                   <td>{{ item.qty * item.price }}</td>
                   <td>
-                    <button v-on:click="remove(item)" class="btn btn-danger">
-                      Supprimer
+                    <button v-on:click="remove(item)" title="Supprimer" class="btn btn-danger">
+                      <i class="bi bi-x-circle"></i>
                     </button>
                   </td>
                 </tr>
@@ -184,7 +182,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .meal {
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 .empty {
   text-align: center;

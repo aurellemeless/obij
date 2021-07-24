@@ -3,7 +3,7 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <div><h3 class="card-title"> Inscription </h3></div>
+            <div><h3 class="card-title" style="text-align:center"> Inscription </h3></div>
             <div class="card meal">
               <div class="card-body">
                 
@@ -26,7 +26,8 @@
                     <label for="pasword">Mot de passe</label>
                     <input type="password"  v-model="user.password"  class="form-control" id="pasword">
                   </div>
-                   <button type="button" class="btn btn-primary btn-lg" v-on:click="doRegistration">Inscription</button>
+                  <button type="button" class="btn btn-primary btn-lg" v-on:click="doRegistration">Créer mon compte </button>
+                  <router-link  class="btn btn-default  btn-lg" to="/login">Vous avez déjà un compte ?</router-link>
                 </form>
               </div>
             </div>

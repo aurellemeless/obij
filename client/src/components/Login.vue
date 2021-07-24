@@ -3,7 +3,7 @@
       <div class="container">
         <div class="row">
           <div class="col">
-             <div><h3 class="card-title"> Authentification </h3></div>
+             <div><h3 class="card-title" style="text-align:center"> Authentification </h3></div>
             <div class="card meal">
              
               <div class="card-body">
@@ -24,8 +24,8 @@
                     <label for="pasword">Mot de passe</label>
                     <input type="password" v-model="user.password" class="form-control" id="pasword">
                   </div>
-                  <router-link  class="btn btn-default" to="/register">Inscription</router-link>
-                  <button type="button" class="btn btn-primary" v-on:click="doLogin">Connexion</button>
+                  <router-link  class="btn btn-default  btn-lg" to="/register">Créer un compte </router-link>
+                  <button type="button" class="btn btn-primary btn-lg" v-on:click="doLogin">Me connecter</button>
                 </form>
               </div>
             </div>
@@ -59,7 +59,7 @@ export default {
           this.errorMsg = "";
           console.log(response)
           setTimeout(()=> {
-            this.$router.push({name : 'Home'});
+            this.$router.push({name : 'AdminMeal'});
           },2000);
         })
         .catch(error => {

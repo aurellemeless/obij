@@ -9,7 +9,7 @@
               <div class="card-body">
                 <h5 class="card-title">{{ meal.name }}</h5>
                 <p class="card-text"> {{ meal.price }}  F CFA</p>
-                <button v-on:click="add(meal)" class="btn btn-primary">Ajouter</button>
+                <button v-on:click="add(meal)" class="btn btn-primary"><i class="bi bi-cart-fill"></i> Ajouter au panier</button>
                 <!-- <button v-on:click="add(meal)" class="btn btn-primary">Details</button> -->
               </div>
             </div>
@@ -31,7 +31,7 @@ export default {
   },
   methods : {
       add : function(meal){
-        if(confirm(`Voulez vous ${meal.name} ajouter au panier`)){
+        if(confirm(`Voulez vous ajouter le plat "${meal.name}" au panier`)){
           let Cart = JSON.parse(localStorage.getItem('CART')) ;
           meal.qty = 1;
           Cart.push(meal);
@@ -56,6 +56,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .meal{
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 </style>

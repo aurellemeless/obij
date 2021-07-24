@@ -1,7 +1,8 @@
 <template>
-  <div>
-       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Obij</a>
+<div class="bg-dark">
+  <div class="container">
+       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Obij</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -20,9 +21,10 @@
           </ul>
           <form class="form-inline my-2 my-lg-0">
             <router-link  class="nav-link" to="/cart">Panier
-              <span v-if="(countItems > 0)" class="cart">  
+               <span v-if="(countItems > 0)" class="cart">  
               {{ countItems }}
               </span>
+              <i class="bi bi-cart-fill"></i>
             </router-link>
            
             <!-- <input class="form-control mr-sm-2" v-model="keyword" type="search" placeholder="Search" aria-label="Search">
@@ -31,6 +33,8 @@
         </div>
       </nav>
   </div>
+
+</div>
 </template>
 
 <script>
@@ -68,7 +72,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 nav{
-  margin-bottom : 20px;
+  margin-bottom : 40px;
 }
 .cart{
     background-color: red;

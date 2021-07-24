@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/meals', (req, res) => {
-  let SQL = `SELECT * FROM meal`;
+  let SQL = `SELECT * FROM meal ORDER BY id DESC`;
   database.query(SQL, function (err, meals) {
     if(err){
       console.log('Error with database: ' + err);
@@ -41,7 +41,6 @@ app.get('/meals', (req, res) => {
 })
 
 app.get('/meals/:id', (req, res) => {
-  req.params.id
   let SQL = `SELECT * FROM meal WHERE id=${req.params.id}`;
   database.query(SQL, function (err, meals) {
     if(err){
@@ -57,8 +56,62 @@ app.get('/meals/:id', (req, res) => {
   });
 })
 
+
+app.put('/meals/:id', (req, res) => {
+  const body = req.body;
+    if( body.name === undefined || body.name =='' || body.price === undefined || body.price =='' || body.qty === undefined || body.qty ==''){
+      return res.sendStatus(411);
+    }
+  let mealSQL = `UPDATE meal SET name="${body.name}", price=${body.price}, qty=${body.qty} WHERE id=${req.params.id}`;
+    database.query(mealSQL, function (err, resultats) {
+            if (err) {
+                res.send("There was a problem updating meal on the database.");
+                console.log('Error updating  meal: ' + err);
+                return res.status(500).send(err);
+            } else {
+                //User has been created
+                return res.sendStatus(200);
+                 
+            }
+      });
+})
+
+
+app.post('/meals', (req, res) => {
+  const body = req.body;
+    if( body.name === undefined || body.name =='' || body.price === undefined || body.price =='' || body.qty === undefined || body.qty ==''){
+      return res.sendStatus(411);
+    }
+  let mealSQL = `INSERT INTO meal(name,price, qty) VALUES('${body.name}', '${body.price}', '${body.qty}')`;
+    database.query(mealSQL, function (err, resultats) {
+            if (err) {
+                res.send("There was a problem creating meal on the database.");
+                console.log('Error creating new meal: ' + err);
+                res.status(500).send(err);
+            } else {
+                //User has been created
+                return res.sendStatus(200);
+                 
+            }
+      });
+})
+
+app.delete('/meals/:id', (req, res) => {
+    
+  let mealSQL = `DELETE FROM meal WHERE id=${req.params.id}`;
+    database.query(mealSQL, function (err, resultats) {
+            if (err) {
+                res.send("There was a problem removing meal on the database.");
+                console.log('Error removing  meal: ' + err);
+                res.status(500).send(err);
+            } else {
+                //User has been created
+                return res.sendStatus(200);
+            }
+      });
+})
 app.post('/login', (req, res) => {
-    var body = req.body;
+    const body = req.body;
     if( body.email === undefined || body.email =='' || body.password === undefined || body.password ==''){
       return res.sendStatus(411);
     }
