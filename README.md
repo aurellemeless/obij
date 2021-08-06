@@ -1,61 +1,54 @@
 # Obij - Restaurant
+Provide food static API
+ - name of item
+ - image
+ - price of item
+ - description of item
 
-![Alt text](doc/home.png?raw=true "Accueil")
-![Alt text](doc/cart.png?raw=true "Panier")
-![Alt text](doc/login.png?raw=true "Connexion")
-![Alt text](doc/register.png?raw=true "Inscription")
-Solution e-commerce pour restaurant
-roles
- - abonnés, visiteurs, manager/admin
+#  Clone and switch branch
+Clone the repo with ssh
+```
+git clone git@github.com:aurellemeless/obij.git
+```
+OR
 
-Features
- - Inscription, authentification, panier, commande
+Clone the repo with https
+```
+git clone https://github.com/aurellemeless/obij.git
+```
 
-### Avant propos
-Ce projet est un challenge personnel pour maitriser vuejs et non une application complete.
-Il faut souligner que :
 
- - Le code n'est pas testé
- - Le code ne respecte pas formément les bonnes pratiques de developpement
+Switch branch
+```
+git checkout static-api
+```
+#  Installation
+Install the dependencies 
 
-## Prérequis
- - MySQL 8 +
- - NodeJs
-## Config Base de données
- - Créez une base de données nommée `obij`
- - Remplacez les informations correctes de la base de données dans le fichier `./api/config/database.js`
- - Importez dans MySQL le fichier SQL `./database.sql`  
-## Dossier client => le front end 
-
-Se positionner dans le dossier `./client` et executer  :
-
-### Config 
 ```
 npm install
 ```
+Start the server
 
-### Compilation demarrer l'application
-```
-npm run serve
-```
-Lancez dans votre navigateur : http://localhost:8081/
-
-## Dossier api => le backend API
-
-Se positionner dans le dossier api et executer  :
-
-### Config 
-```
-npm install
-```
-### Demarrer l'API
 ```
 npm start
 ```
+Enjoy with Obij API
+#  Check the list
 
-### Tester l'API 
-Vous pouvez tester l'API en utilisant postman, il suffit d'importer le ficher  `./doc/OBIJ.postman_collection.json`.
-## Quelques améliorations possibles
-- Eviter les doublons dans le panier
-- L'interface utilisateur
-- Utiliser un ORM
+http://localhost:8001/meals
+
+```js
+[
+    // ...
+    {
+        "id":5,
+        "name" : "Name of the meal",
+        "description" : " description of the meal",
+        "image" : "URL of the meal",
+        "price" : 0, // price of the meal as int,
+    }
+    // ...
+]
+
+```
