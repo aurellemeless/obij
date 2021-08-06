@@ -23,6 +23,12 @@ Switch branch
 git checkout static-api
 ```
 #  Installation
+
+Move to api directory
+```
+cd api
+```
+
 Install the dependencies 
 
 ```
