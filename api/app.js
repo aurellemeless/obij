@@ -28,8 +28,8 @@ app.get('/', (req, res) => {
 })
 
 app.get('/meals', (req, res) => {
-  let SQL = `SELECT * FROM meal ORDER BY id DESC`;
-  database.query(SQL, function (err, meals) {
+  const mealSQL = `SELECT * FROM meal ORDER BY id DESC`;
+  database.query(mealSQL, function (err, meals) {
     if(err){
       console.log('Error with database: ' + err);
       return res.sendStatus(500);
@@ -41,8 +41,8 @@ app.get('/meals', (req, res) => {
 })
 
 app.get('/meals/:id', (req, res) => {
-  let SQL = `SELECT * FROM meal WHERE id=${req.params.id}`;
-  database.query(SQL, function (err, meals) {
+  const mealSQL = `SELECT * FROM meal WHERE id=${req.params.id}`;
+  database.query(mealSQL, function (err, meals) {
     if(err){
       console.log('Error with database: ' + err);
       return res.sendStatus(500);
@@ -58,11 +58,11 @@ app.get('/meals/:id', (req, res) => {
 
 
 app.put('/meals/:id', (req, res) => {
-  const body = req.body;
-    if( body.name === undefined || body.name =='' || body.price === undefined || body.price =='' || body.qty === undefined || body.qty ==''){
-      return res.sendStatus(411);
+  const { name, price, qty} = req.body;
+    if( !name || !price || !price || !qty ){
+      return res.sendStatus(400);
     }
-  let mealSQL = `UPDATE meal SET name="${body.name}", price=${body.price}, qty=${body.qty} WHERE id=${req.params.id}`;
+  const mealSQL = `UPDATE meal SET name="${name}", price=${price}, qty=${qty} WHERE id=${req.params.id}`;
     database.query(mealSQL, function (err, resultats) {
             if (err) {
                 res.send("There was a problem updating meal on the database.");
@@ -78,12 +78,12 @@ app.put('/meals/:id', (req, res) => {
 
 
 app.post('/meals', (req, res) => {
-  const body = req.body;
-    if( body.name === undefined || body.name =='' || body.price === undefined || body.price =='' || body.qty === undefined || body.qty ==''){
-      return res.sendStatus(411);
+  const {name, price, qty} = req.body;
+    if( !name || !price  || !qty ){
+      return res.sendStatus(400);
     }
-  let mealSQL = `INSERT INTO meal(name,price, qty) VALUES('${body.name}', '${body.price}', '${body.qty}')`;
-    database.query(mealSQL, function (err, resultats) {
+  const mealSQL = `INSERT INTO meal(name,price, qty) VALUES('${name}', '${price}', '${qty}')`;
+    database.query(mealSQL, function (err) {
             if (err) {
                 res.send("There was a problem creating meal on the database.");
                 console.log('Error creating new meal: ' + err);
@@ -98,8 +98,8 @@ app.post('/meals', (req, res) => {
 
 app.delete('/meals/:id', (req, res) => {
     
-  let mealSQL = `DELETE FROM meal WHERE id=${req.params.id}`;
-    database.query(mealSQL, function (err, resultats) {
+  const mealSQL = `DELETE FROM meal WHERE id=${req.params.id}`;
+    database.query(mealSQL, function (err) {
             if (err) {
                 res.send("There was a problem removing meal on the database.");
                 console.log('Error removing  meal: ' + err);
@@ -111,20 +111,19 @@ app.delete('/meals/:id', (req, res) => {
       });
 })
 app.post('/login', (req, res) => {
-    const body = req.body;
-    if( body.email === undefined || body.email =='' || body.password === undefined || body.password ==''){
+    const {email, password} = req.body;
+    if( !email || !password ){
       return res.sendStatus(411);
     }
-  
  
-    let SQL = `SELECT * FROM user WHERE email = '${body.email}'`;
+    const SQL = `SELECT * FROM user WHERE email = '${email}'`;
     database.query(SQL, function (err, user) {
       if(err){
         console.log('Error with credentials: ' + err);
         return res.sendStatus(500);
        }else{
          if(user){
-            bcrypt.compare(body.password, user[0].password, function(err, match) {
+            bcrypt.compare(password, user[0].password, function(err, match) {
               if(err){
                 console.log('Error with credentials: ' + err);
                 return res.sendStatus(500);
@@ -135,14 +134,10 @@ app.post('/login', (req, res) => {
                         console.log(err);
                         return res.sendStatus(500);
                       }else{
-                        var data = {
+                        delete user[0].password;
+                        const data = {
                           access_token : token,
-                          user : {
-                            id : user[0].id,
-                            email : user[0].email,
-                            name : user[0].name,
-                            ability : user[0].ability
-                          }
+                          user : user[0]
                         };
                         res.json(data);
                       }
@@ -167,24 +162,22 @@ app.post('/login', (req, res) => {
 
 app.post('/register', (req, res) => {
 
-  const body = req.body;
-  if(body.name === undefined || body.name =='' 
-        || body.email === undefined || body.email =='' 
-        || body.password === undefined || body.password =='' ){
+  const {email , name, password} = req.body;
+  if(!name  || !email  || !password || !password ){
         return res.sendStatus(422);
-    }
+  }
   //
-  let newUser = {
-    name : body.name,
-    email: body.email,
-    password: body.password,
+  const newUser = {
+    name,
+    email,
+    password,
     ability:1 // common user -> clients
   };
   //
-  bcrypt.hash(newUser.password, config.bcrypt.saltRounds, function(err, hash) {
+  bcrypt.hash(password, config.bcrypt.saltRounds, function(err, hash) {
     newUser.password = hash;
-    let SQL = `INSERT INTO user(name,email, password, ability) VALUES('${newUser.name}', '${newUser.email}', '${newUser.password}', ${newUser.ability})`;
-    database.query(SQL, function (err, user) {
+    const SQL = `INSERT INTO user(name,email, password, ability) VALUES('${name}', '${email}', '${password}', ${newUser.ability})`;
+    database.query(SQL, function (err) {
             if (err) {
                 res.send("There was a problem creating user on the database.");
                 console.log('Error creating new user: ' + err);
@@ -198,14 +191,10 @@ app.post('/register', (req, res) => {
 })
 
 app.post('/checkout', (req, res) => {  
-  const body = req.body;
-  if(body.cart === undefined || body.cart ==''
-    || body.user === undefined || body.user =='' 
-    || body.user.name === undefined || body.user.name ==''
-    || body.user.email === undefined || body.user.email ==''
-    || body.user.phone === undefined || body.user.phone ==''  ){
+  const {cart, user} = req.body;
+  if(!cart || !user || !user.name || !user.email || !user.phone ){
         return res.sendStatus(422);
-    }
+  }
   //
   let meals = [];
   let mealSQL = "SELECT * FROM meal WHERE id IN (";
@@ -243,12 +232,12 @@ app.post('/checkout', (req, res) => {
         }
       }
       // 
-      let newInvoice = {
+      const newInvoice = {
         reference :  crypto.randomBytes(6).toString('hex'),
         amount: amount,
-        name: body.user.name,
-        email: body.user.email,
-        phone: body.user.phone
+        name: user.name,
+        email: user.email,
+        phone: user.phone
       };
       const invoiceSQL =  `INSERT INTO invoice(name,email, phone,reference,amount, created_at) VALUES('${newInvoice.name}', '${newInvoice.email}', '${newInvoice.phone}', '${newInvoice.reference}', '${newInvoice.amount}', NOW())`;
     
@@ -261,9 +250,8 @@ app.post('/checkout', (req, res) => {
           for(let row of invoiceRows){
               rowsSQL +=`INSERT INTO invoice_row(invoice_id,meal_id, qty, price) VALUES(${results.insertId}, ${row.id}, ${row.qty}, ${row.price});`;
           }
-          
-          console.log("rowsSQL", rowsSQL);
-          database.query(rowsSQL, function(err, results){
+
+          database.query(rowsSQL, function(err){
             if(err){
               console.error(err);
               return res.status(500).send(err);
