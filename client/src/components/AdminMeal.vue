@@ -7,10 +7,10 @@
             <div class="card meal">
               <div class="card-body">
                 
-                  <div v-if="errorMsg.length>0" class="alert alert-danger" role="alert">
+                  <div v-if="errorMsg.length" class="alert alert-danger" role="alert">
                     {{ errorMsg }}
                   </div>
-                  <div v-if="successMsg.length>0" class="alert alert-success" role="alert">
+                  <div v-if="successMsg.length" class="alert alert-success" role="alert">
                     {{ successMsg }}
                   </div>
                 <form>

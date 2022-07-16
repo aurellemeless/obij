@@ -3,11 +3,11 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <div class="empty" v-if="total == 0">
+          <div class="empty" v-if="!total">
             <h2>Votre panier est vide</h2>
             <router-link class="btn btn-primary btn-lg" to="/">Retourner à l'acceuil</router-link>
           </div>
-          <div v-if="total > 0">
+          <div v-if="total">
             <table class="table">
               <thead>
                 <tr>
@@ -95,7 +95,7 @@
         </div>
       </div>
 
-      <div class="row" v-if="total > 0">
+      <div class="row" v-if="total">
         <div class="col" style="padding-bottom:50px;text-align:right">
           <button v-on:click="checkout" class="btn btn-primary btn-lg">
             Soumettre ma commande
@@ -169,7 +169,7 @@ export default {
   },
   mounted() {
     let CART = JSON.parse(localStorage.getItem("CART"));
-    if (CART == undefined) {
+    if (!!CART) {
       localStorage.setItem("CART", []);
     } else {
       this.cart = JSON.parse(localStorage.getItem("CART"));
